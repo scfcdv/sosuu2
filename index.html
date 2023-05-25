@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>素数ジェネレーター2</title>
+  <script>
+    function isPrime(num) {
+      if (num < 2) return false;
+      for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function findNearestPrime() {
+      const input = parseInt(document.getElementById('number').value);
+      let closestPrime = null;
+      let diff = Infinity;
+
+      if (isNaN(input)) {
+        document.getElementById('result').textContent = '無効な入力です。';
+        return;
+      }
+
+      if (input < 2) {
+        closestPrime = 2;
+      } else {
+        for (let i = input; i >= 2; i--) {
+          if (isPrime(i)) {
+            const currentDiff = Math.abs(input - i);
+            if (currentDiff <= diff) {
+              closestPrime = i;
+              diff = currentDiff;
+            } else {
+              break;
+            }
+          }
+        }
+      }
+
+      document.getElementById('result').textContent = `入力された数に最も近い素数は ${closestPrime} です。`;
+    }
+  </script>
+</head>
+<body>
+  <label for="number"></label>
+  <input type="number" id="number" />
+  <button onclick="findNearestPrime()">検索</button>
+  <div id="result"></div>
+</body>
+</html>
